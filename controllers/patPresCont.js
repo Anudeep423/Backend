@@ -9,23 +9,22 @@ module.exports = {
     createPres: async(req, res) => {
 
         try {
-        const  {med_name, duration, morning_dose, evening_dose} = req.body;
+        console.log(req.body);
         //const userinfo = req.body.id
-        const medDets = {med_name: med_name, duration: duration, morning_dose: morning_dose, evening_dose: evening_dose};
-
-        const newAddPres = new patPres({userinfo: req.body.id, $push: { medDetails: medDets }});
-
-        const savedPres = await newAddPres.save();
-
-        res.json({message: 'patient prescription saved successfully', result: savedPres})
+//i am seeing but cant talk manually
+      var newData =  new patPres(req.body)
+      newData.save().then(data =>   console.log(data) ).catch(err => { res.json(err)  })
+        res.json({message: 'patient prescription saved successfully', result: newData})
         } catch (err) {
             res.status(400).json({
                 status: 'fail',
-                message: err
+                message: err.message
             })
         }
-    },
-    
+    }, //yes take control ________ wait 6 wait 2 secs 
+
+
+    // {"UID":"g1ACPK8cPK6","medDetails":[{"med_name":"PPPPPPPP","duration":"qwd","morning_dose":"morinng - 1","evening_dosage":"Evening - 2"},{"med_name":"AAAAA","duration":"qwd","morning_dose":"morinng - 2","evening_dosage":"Evening - 1"}]}
 
     allPatPres: async(req, res) => {
         
@@ -35,6 +34,7 @@ module.exports = {
                 status: 'success',
                 results: result.length,
                 data: result
+                
         }).catch (err => {
         res.status(404).json({
             status: 'fail',
@@ -42,6 +42,21 @@ module.exports = {
         });
     })
     })
+    },
+
+    getPatPres : async(req, res) => {
+
+        const id = req.params.id
+        const patdets = await patPres.find({UID : id})
+        if(patdets){
+        res.status(200).json({
+                status: 'success',
+                results: patdets.length,
+                data: patdets
+        })}else{
+            res.json("Error fetching data")
+        }
+
     },
 /*
     patPrescrip: async(req, res) => {

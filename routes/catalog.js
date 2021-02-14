@@ -89,6 +89,8 @@ router.post('/patients/prescriptions/create', patPresCont.createPres);
 // GET request to display all the patient prescription details
 router.get('/patients/prescriptions', patPresCont.allPatPres);
 
+router.get("/patient/:id/pres", patPresCont.getPatPres);
+
 // PUT request to add the specific patient prescription details
 router.put('/patients/prescriptions/:presid/create', patPresCont.addPres);
 
