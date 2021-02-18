@@ -2,9 +2,11 @@ require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const patDtsCont = require('../controllers/patDetsCont');
+const graphDets = require('../controllers/graphDets');
 const upload = require('../controllers/repUploadCont');
 const uplReport = require('../models/patReport');
 const patPresCont = require('../controllers/patPresCont');
+
 //const doct = require('../controllers/docCont');
 const path = require('path');
 const AWS = require("aws-sdk");
@@ -13,10 +15,14 @@ var fs = require('fs');
 //const { ManagedUpload } = require("aws-sdk/clients/s3");
 
 
-// routes for patient details
+// routes for graph details
+router.post('/doctor/create/graph',  graphDets.createGraph);
 
 // POST request to create patient details
 router.post('/patients/create', patDtsCont.patDetsValidate('create_patDets'), patDtsCont.create_patDets);
+
+//Get route to get patient grapph values 
+router.get('/patient/:id/graphvalues', graphDets.getPatGraph);
 
 // GET request to display the specific patient details 
 router.get('/patients/:id', patDtsCont.patDets);

@@ -3,25 +3,34 @@ const patPres = require('../models/patPres');
 
 
 
+
+
 module.exports = {
 
     
-    createPres: async(req, res) => {
+    createPres: async (req, res) => {
+
+        
+
 
         try {
         console.log(req.body);
         //const userinfo = req.body.id
 //i am seeing but cant talk manually
-      var newData =  new patPres(req.body)
-      newData.save().then(data =>   console.log(data) ).catch(err => { res.json(err)  })
-        res.json({message: 'patient prescription saved successfully', result: newData})
-        } catch (err) {
+      var newData = new patPres(req.body)
+
+      const savedpatDets = await newData.save();
+        res.json({message: 'patient prescription saved successfully', result: savedpatDets})
+        }catch (err) {
             res.status(400).json({
                 status: 'fail',
                 message: err.message
             })
         }
-    }, //yes take control ________ wait 6 wait 2 secs 
+    }, 
+    
+    
+    //yes take control ________ wait 6 wait 2 secs 
 
 
     // {"UID":"g1ACPK8cPK6","medDetails":[{"med_name":"PPPPPPPP","duration":"qwd","morning_dose":"morinng - 1","evening_dosage":"Evening - 2"},{"med_name":"AAAAA","duration":"qwd","morning_dose":"morinng - 2","evening_dosage":"Evening - 1"}]}

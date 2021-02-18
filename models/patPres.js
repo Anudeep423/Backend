@@ -6,6 +6,10 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const patPresMod = new Schema ({
 
+    Doctor : {
+        type : String,
+        required : true
+    },
     UID: {
         type: String,
         required : true
