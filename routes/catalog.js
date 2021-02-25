@@ -12,6 +12,7 @@ const path = require('path');
 const AWS = require("aws-sdk");
 //const webview = require('webview');
 var fs = require('fs');
+const sendMail = require("../controllers/mail");
 //const { ManagedUpload } = require("aws-sdk/clients/s3");
 
 
@@ -98,7 +99,7 @@ router.get('/patients/prescriptions', patPresCont.allPatPres);
 router.get("/patient/:id/pres", patPresCont.getPatPres);
 
 // PUT request to add the specific patient prescription details
-router.put('/patients/prescriptions/:presid/create', patPresCont.addPres);
+//router.put('/patients/prescriptions/:presid/create', patPresCont.addPres);
 
 // PUT request to update the specific patient prescription details
 router.put('/patients/prescriptions/:presid/:medetid/update', patPresCont.addPres);
@@ -106,6 +107,16 @@ router.put('/patients/prescriptions/:presid/:medetid/update', patPresCont.addPre
 // PUT request to delete the specific patient prescription details
 router.put('/patients/prescriptions/:presid/:medetid/delete', patPresCont.delPres);
 
+router.post('/email', (req, res) => {
+    const {email, subject, text} = req.body
 
+    sendMail(email, subject, text, function(err, data) {
+        if (err) {
+            res.status(500).json({ message: 'Internal Error' });
+        } else {
+            res.json({ message: 'Email sent!!!' });
+        }
+    });
+})
 
 module.exports = router;

@@ -126,7 +126,7 @@ module.exports = {
             });
         }
 
-        patPres.update({medDetails: {_id: medid}}, req.body, {safe: true, upsert: true, useFindAndModify: false}, 
+        patPres.updateOne({medDetails: {_id: medid}}, req.body, {safe: true, upsert: true, useFindAndModify: false}, 
         function (err, result) {
             if(err)
             res.send({status: 'fail', err: err.message})

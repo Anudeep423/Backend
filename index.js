@@ -50,6 +50,7 @@ function validateUser(req, res, next) {
       }else{
         // add user id to request
         req.body.id = decoded.id;
+        res.locals.id = decoded.id;
         next();
       }
     });
@@ -58,7 +59,7 @@ function validateUser(req, res, next) {
 
 app.use('/users', usersRouter);
 
-app.use('/catalog', catalogRouter);
+app.use('/catalog', validateUser, catalogRouter);
 
 
 // catch 404 and forward to error handler
