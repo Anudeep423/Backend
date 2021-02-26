@@ -1,3 +1,4 @@
+
 const nodemailer = require('nodemailer');
 const mailGun = require('nodemailer-mailgun-transport');
 
@@ -17,8 +18,8 @@ const sendMail = (email, subject, text, cb) => {
     const mailOptions = {
         from: email,
         to: 'aditya.metal01@gmail.com',
-        subject,
-        text
+        subject: 'Notification - Data is Accessed!',
+        text: 'Hi patient_name,\n Your Data has been accessed By Dr. doctor_name'
     };
     transporter.sendMail(mailOptions, function(err, data) {
         if (err) {
